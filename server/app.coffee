@@ -26,14 +26,15 @@ app.use (err, req, res, next) ->
 app.use '/api/v1/accounts', createAccountLimiter
 app.use '/api/v1/accounts', (req, res) ->
   # console.log req.params, req.query, req.body
-  { name, owner_key, active_key, memo_key } = req.body?.account?
+  if req.body.account
+    { name, owner_key, active_key, memo_key } = req.body.account
   unless name or owner_key or active_key or memo_key
-    return res.status(400).json({message: 'No request data'})
+    return res.status(400).json({error: base: ['No request data']})
   try
     await IndexApi.register name, owner_key, active_key, memo_key
   catch error
-    return res.status(400).json({message: error.message})
-  res.json {message: 'OK'}
+    return res.status(400).json({error: base: [error.message]})
+  res.json {success: message: 'OK'}
 
 app.use (req, res, next) ->
   res.status(404).send('Sorry cant find that!')
