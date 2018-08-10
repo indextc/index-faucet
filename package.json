@@ -1,0 +1,29 @@
+{
+  "name": "index-faucet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/server/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon dist/server/app.js",
+    "server": "parcel watch -t node --no-cache --out-dir dist/server server/app.coffee",
+    "build": "parcel build -t node --no-cache --out-dir dist/server server/app.coffee"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "debug": "^3.1.0",
+    "express": "^4.16.3",
+    "express-rate-limit": "^2.12.2",
+    "indexjs-ws": "^1.5.7",
+    "indextcjs": "^1.8.0",
+    "koa": "^2.5.2"
+  },
+  "devDependencies": {
+    "coffeescript": "^2.3.1",
+    "nodemon": "^1.18.3",
+    "parcel": "^1.9.7"
+  }
+}
