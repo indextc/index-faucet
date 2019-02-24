@@ -6,6 +6,8 @@ wsString = config.nodeUrl
 registrar = config.registrarAccount
 registrarPrivateKey = config.registrarPrivateKey
 
+Apis.setAutoReconnect true
+
 Apis.instance(wsString, true).init_promise.then (res) ->
   console.log("connected to:", res[0].network)
 
