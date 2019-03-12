@@ -8,14 +8,25 @@ registrarPrivateKey = config.registrarPrivateKey
 
 Apis.setAutoReconnect true
 
-Apis.instance(wsString, true).init_promise.then (res) ->
+Apis.instance(wsString, true, 4000, {}, onClose).init_promise.then (res) ->
   console.log("connected to:", res[0].network)
+  onConnect()
+.catch onClose
+
+onConnect = ->
+  await ChainStore.init(true)
+
+onClose = (e) ->
+  console.log e
+  setTimeout ->
+    Apis.reset wsString, true, 4000, {}, onClose
+    .then onConnect
+    .catch onClose
+  , 2000
 
 Apis.register = (name, owner, active, memo) ->
   if not name.match(/[0-9-]/) or not name.match(/[aeiouy]/)
     throw new Error 'Premium names registration is not supported by this faucet'
-
-  await ChainStore.init()
 
   pKey = PrivateKey.fromWif(registrarPrivateKey)
 
